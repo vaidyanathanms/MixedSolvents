@@ -21,7 +21,6 @@ print("Version: Aug-18-2026")
 
 #------------------------------------------------------------------
 # Input data
-# Note: 100% water is kept at 99.99% to avoid NaN errors
 run_all  = 0 # 1-copy files and run, 0-NO run (copies files)
 
 cation_types      = ['Fe','Na']
@@ -78,7 +77,10 @@ for s1id,s1name in enumerate(solvent_1_arr):
             # Compute required number of molecules of each solvent
             s1nmol,s2nmol,volsol = ef.compute_solv_molecules(s1name,\
                                                              s2name,\
-                                                             v1frac)
+                                                             v1frac,\
+                                                             excel_fname=excel_file,\
+                                                             sheet_name=sheet_name):
+)
 
             # Loop over concentrations of solvent-1
             for c1id,c1val in enumerate(sol1_conc_arr):
@@ -98,7 +100,11 @@ for s1id,s1name in enumerate(solvent_1_arr):
                         # Compute number of molecules of electrolyte-1
                         e1nmol = ef.compute_elec_molecules(volsol,\
                                                            c1val,\
-                                                           e1name)
+                                                           e1name,\
+                                                           excel_fname=excel_file,\
+                                                           sheet_name=sheet_name):
+)
+
                         # Loop over electrolyte-2
                         for e2id,e2name in enumerate(electrolyte_2_arr):
                             # Split cations and anions in Elec-1
@@ -111,7 +117,10 @@ for s1id,s1name in enumerate(solvent_1_arr):
                             # Compute number of molecules of electrolyte-2
                             e2nmol = ef.compute_elec_molecules(volsol,\
                                                                c2val,\
-                                                               e2name)
+                                                               e2name,\
+                                                               excel_fname=excel_file,\
+                                                               sheet_name=sheet_name):
+)
                             elec1dir = scr_dir + '/' + e1name + \
                                 '_conc_' + str(c1val)
                             if not os.path.isdir(elec1dir):
@@ -140,7 +149,11 @@ for s1id,s1name in enumerate(solvent_1_arr):
                                                     s2name,s2nmol,\
                                                     e1name,e1nmol,\
                                                     e2name,e2nmol,\
-                                                    init_dens = init_density)
+                                                    init_dens =\
+                                                    init_density,\
+                                                    excel_fname=excel_file,\
+                                                    sheet_name=sheet_name):
+)
                             
 
                             # Set-up gmx inputs

@@ -97,8 +97,10 @@ def glob_ci(root, wildcard_pattern):
 #------------------------------------------------------------------
 
 # Compute total number of electrolyte atoms
-def compute_solv_molecules(s1name,s2name,v1frac):
-    chemicals = load_components("all_props.xlsx","PropertyData")
+def compute_solv_molecules(s1name,s2name,v1frac\
+                           excel_fname='all_props.xlsx',\
+                           sheet_name='PropertyData'):
+    chemicals = load_components(excel_fname,sheet_name)
     s1nmol = 100*v1frac
     s1type = chemicals[s1name]; s2type = chemicals[s2name]
     s1dens = s1name.density; s2dens = s2name.density
@@ -111,8 +113,10 @@ def compute_solv_molecules(s1name,s2name,v1frac):
 #------------------------------------------------------------------
 
 # Compute total number of electrolyte atoms
-def compute_elec_molecules(solvol,conc,ename):
-    chemicals = load_components("all_props.xlsx","PropertyData")
+def compute_elec_molecules(solvol,conc,ename,\
+                           excel_fname='all_props.xlsx',\
+                           sheet_name='PropertyData'):
+    chemicals = load_components(excel_fname,sheet_name)
     etype = chemicals[ename]
     return solvol*conc*0.001 # For conversion to mol/cc
 
@@ -120,8 +124,11 @@ def compute_elec_molecules(solvol,conc,ename):
 
 # Compute total number of atoms and simulation box dimensions
 def compute_sim_dims(s1name,s1nmol,s2name,s2nmol,e1name,e1nmol,\
-                     e2name,e2nmol,init_dens = 0.8):
-    chemicals = load_components("all_props.xlsx","PropertyData")
+                     e2name,e2nmol,init_dens = 0.8,\
+                     excel_fname='all_props.xlsx',\
+                     sheet_name='PropertyData'):
+):
+    chemicals = load_components(excel_fname,sheet_name)
     s1type = chemicals[s1name]; s2type = chemicals[s2name]
     e1type = chemicals[e1name]; e2type = chemicals[e2name]
     totatoms = s1nmol*s1type.Natoms + s2nmol*s2type.Natoms + \
@@ -414,7 +421,7 @@ def clean_up(workdir):
             os.remove(fyle)
 #------------------------------------------------------------------
 
-def load_components(excel_file, sheet_name='MolData'):
+def load_components(excel_file, sheet_name='PropertyData'):
     df = pd.read_excel(excel_file, sheet_name=sheet_name)
 
     df = df.rename(columns={

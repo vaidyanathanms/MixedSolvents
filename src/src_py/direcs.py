@@ -11,6 +11,8 @@ cfg_dir   = gmx_dir  + '/gropdb_files' # configuration dir
 itp_dir   = gmx_dir  + '/itp_files' # prm/itp file dir
 mdp_dir   = gmx_dir  + '/mdp_files' # mdp file dir
 
+excel_file = head_dir + '/all_props.xlsx'
+
 # PACKMOL directory
 pack_exec = home_dir + '/tools/packmol/packmol' #packmol executable
 
