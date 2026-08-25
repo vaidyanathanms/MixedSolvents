@@ -1,4 +1,4 @@
-./backup_gro_pdb_itp_files/*
-./backup_pyfiles/*
+./backup_gro_pdb_itp_files
+./backup_pyfiles
 ./src/src_py/*~
-./InputStructures/*
+./InputStructures
