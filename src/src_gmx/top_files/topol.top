@@ -1,0 +1,16 @@
+[ defaults ]
+; nbfunc	comb-rule	gen-pairs	fudgeLJ	fudgeQQ
+1               2               yes             0.5     0.5
+
+#include "../itp_files/ffnonbonded.itp"
+#include "../itp_files/fe.itp"
+#include "../itp_files/tfsi.itp"
+#include "../itp_files/tip3p.itp"
+
+[ system ]
+FeCl_Sol
+
+[ molecules ]
+T2N	10
+FE	100
+SOL	40
