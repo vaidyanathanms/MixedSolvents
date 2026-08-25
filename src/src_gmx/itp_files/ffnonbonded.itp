@@ -1,0 +1,44 @@
+[ atomtypes ] 
+; name at.num  mass   charge  ptype    sigma         epsilon 
+MG      12 	24.30500     	 1.600   A	   1.64447e-01     3.66118e+00  ; Mg-Metal Zeron J Chem Phys FF based on TIP4P
+FE2I    26 	55.8450     	 1.600   A	   2.41078e-01     3.09404e-02  ; Fe-2+ Table-8 (IOD) Li Merz JCTC 9 (6) 2013: 2733-2748
+FE2H    26 	55.8450     	 1.600   A	   2.13820e-01     7.11300e-02  ; Fe-2+ Table-7 Li (HFE) Merz JCTC 9 (6) 2013: 2733-2748
+FE3L    26      55.854000        2.400   A         0.2469571247    5.68000e-02  ; Fe3+  Table-3 Li Merz JPCB 119 (3) 2015: 883-895
+SSUL    16      32.060           1.280   A         3.56359e-01     1.04600e+00  ; S-SO42-, Kashefolgheta, q-scaled, PCCP 19 (31) 2017, 20593
+OSUL     8      15.999          -0.720   A         2.95992e-01     8.78640e-01  ; O-SO42-, Kashefolgheta, q-scaled, PCCP 19 (31) 2017, 20593
+CLH     17      35.453          -0.800   A         4.012608e-01    2.522663e+00 ; Li-Merz Table-2 (HFE) JCTC, 11 (4) 2015: 1645-1657
+CLI     17      35.453          -0.800   A         3.852246e-01    2.223991e+00 ; Li-Merz Table-3 (IOD) JCTC, 11 (4) 2015: 1645-1657
+NAH     11      22.989769        0.800   A         2.628151e-01    1.326953e-01 ; Li-Merz Table-2 (HFE) JCTC, 11 (4) 2015: 1645-1657
+NAI     11      22.989769        0.800   A         2.610333e-01    1.217195e-01 ; Li-Merz Table-3 (IOD) JCTC, 11 (4) 2015: 1645-1657
+FC	9   	18.998400	-0.128	 A  	   2.95000e-01     2.21750e-01  ; TFSI-F, CL&P
+CF	6   	12.011000  	+0.280	 A	   3.50000e-01     2.76144e-01  ; TFSI-C, CL&P
+SO	16  	32.060000   	+0.816	 A	   3.55000e-01     10.4600e-01  ; TFSI-S, CL&P
+OS	8   	15.999400   	-0.424 	 A	   2.96000e-01     8.78640e-01  ; TFSI-O, CL&P
+NS	7	14.006700 	-0.528	 A	   3.25000e-01     7.11280e-01  ; TFSI-N, CL&P
+OW     	8      	15.99940    	-0.834   A    	   3.15061e-01     6.36386e-01  ; H2O-O, TIP3P
+HW     	1       1.00800     	 0.417   A    	   1.00000e-01     0.00000e+00  ; H2O-H, TIP3P
+ACH     1       1.00800          0.000   A         2.50000E-01     1.25520E-01  ; ACN-H, LigParGen 
+ACC0    6       12.0110          0.000   A         3.50000E-01     2.76144E-01  ; ACN-C0, LigParGen
+ACC1    6       12.0110          0.000   A         3.30000E-01     2.76144E-01  ; ACN-C1, LigParGen
+ACN0    7       14.0070          0.000   A         3.20000E-01     7.11280E-01  ; ACN-N, LigParGen
+EGH1    1       1.0080           0.000   A	   0.00000E+00     0.00000E+00  ; EGL-H1, LigParGen
+EGH2    1       1.0080     	 0.000   A    	   2.50000E-01     1.25520E-01  ; EGL-H2, LigParGen
+EGC     6       12.0110    	 0.000   A   	   3.50000E-01     2.76144E-01  ; EGL-C, LigParGen
+EGO     8       15.9990     	 0.000   A   	   3.12000E-01     7.11280E-01  ; EGL-O, LigParGen
+TGH     1       1.0080           0.000   A         2.50000E-01     1.25520E-01  ; TGL-H, LigParGen
+TGC     6       12.0110          0.000   A         3.50000E-01     2.76144E-01  ; TGL-C, LigParGen
+TGO     8       15.9990          0.000   A         2.90000E-01     5.85760E-01  ; TGL-O, LigParGen
+TFH     1       1.0080           0.000   A         2.50000E-01     1.25520E-01  ; THF-H, LigParGen
+TFC     6       12.0110          0.000   A    	   3.50000E-01     2.76144E-01  ; THF-C, LigParGen
+TFO     8       15.9990          0.000   A    	   2.90000E-01     5.85760E-01  ; THF-O, LigParGen
+MOH1    1       1.0080           0.000   A         2.50000E-01     1.25520E-01  ; MET-H1, LigParGen
+MOH2    1       1.0080           0.000   A         0.00000E+00     0.00000E+00  ; MET-H2, LigParGen
+MOC     6       12.0110          0.000   A         3.50000E-01     2.76144E-01  ; MET-C, LigParGen
+MOO     8       15.9990          0.000   A         3.12000E-01     7.11280E-01  ; MET-O, LigParGen
+
+
+; Only use when Li-Merz forcefields above are incompatible
+; FE2C    26      55.854000        1.600   A         0.192451941093  0.6673480    ; Iron2 from charmm
+; FE3C    26      55.854000        2.400   A         0.100903188817  0.5238368    ; Iron3 from charmm
+; FE3O    26 	55.8450     	 2.400   A	   1.40900e-01     7.19648e-01  ; Fe-3+Metal Table 8 Li JCTC 2013 PME compatible LJ
+

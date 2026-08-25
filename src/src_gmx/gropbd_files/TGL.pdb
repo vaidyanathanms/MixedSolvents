@@ -1,0 +1,76 @@
+REMARK LIGPARGEN GENERATED PDB FILE
+ATOM      1  C00 TGL     1       6.436   1.868  -0.396
+ATOM      2  O01 TGL     1       5.122   1.434  -0.079
+ATOM      3  C02 TGL     1       5.102   0.644   1.115
+ATOM      4  C03 TGL     1       3.686   0.114   1.343
+ATOM      5  O04 TGL     1       3.449  -0.991   0.463
+ATOM      6  C05 TGL     1       2.093  -1.430   0.476
+ATOM      7  C06 TGL     1       1.223  -0.613  -0.483
+ATOM      8  O07 TGL     1      -0.112  -1.115  -0.572
+ATOM      9  C08 TGL     1      -0.921  -0.775   0.561
+ATOM     10  C09 TGL     1      -2.378  -1.126   0.261
+ATOM     11  O0A TGL     1      -2.938  -0.118  -0.586
+ATOM     12  C0B TGL     1      -4.190  -0.486  -1.165
+ATOM     13  C0C TGL     1      -5.315  -0.722  -0.146
+ATOM     14  O0D TGL     1      -5.465   0.322   0.818
+ATOM     15  C0E TGL     1      -5.869   1.560   0.251
+ATOM     16  H0F TGL     1       6.390   2.465  -1.311
+ATOM     17  H0G TGL     1       7.090   1.009  -0.572
+ATOM     18  H0H TGL     1       6.838   2.492   0.408
+ATOM     19  H0I TGL     1       5.395   1.282   1.956
+ATOM     20  H0J TGL     1       5.809  -0.188   1.015
+ATOM     21  H0K TGL     1       2.956   0.908   1.161
+ATOM     22  H0M TGL     1       3.591  -0.245   2.374
+ATOM     23  H0N TGL     1       1.697  -1.422   1.498
+ATOM     24  H0O TGL     1       2.083  -2.477   0.152
+ATOM     25  H0P TGL     1       1.658  -0.670  -1.487
+ATOM     26  H0Q TGL     1       1.211   0.451  -0.220
+ATOM     27  H0R TGL     1      -0.581  -1.360   1.421
+ATOM     28  H0S TGL     1      -0.827   0.295   0.778
+ATOM     29  H0T TGL     1      -2.438  -2.103  -0.232
+ATOM     30  H0U TGL     1      -2.941  -1.144   1.199
+ATOM     31  H0V TGL     1      -4.471   0.334  -1.835
+ATOM     32  H0W TGL     1      -4.053  -1.375  -1.793
+ATOM     33  H0X TGL     1      -5.105  -1.634   0.423
+ATOM     34  H0Y TGL     1      -6.268  -0.884  -0.663
+ATOM     35  H0Z TGL     1      -6.763   1.432  -0.367
+ATOM     36  H10 TGL     1      -5.059   2.000  -0.338
+ATOM     37  H11 TGL     1      -6.107   2.247   1.069
+TER 
+CONECT    1    2 
+CONECT    2    3 
+CONECT    3    4 
+CONECT    4    5 
+CONECT    5    6 
+CONECT    6    7 
+CONECT    7    8 
+CONECT    8    9 
+CONECT    9   10 
+CONECT   10   11 
+CONECT   11   12 
+CONECT   12   13 
+CONECT   13   14 
+CONECT   14   15 
+CONECT    1   16 
+CONECT    1   17 
+CONECT    1   18 
+CONECT    3   19 
+CONECT    3   20 
+CONECT    4   21 
+CONECT    4   22 
+CONECT    6   23 
+CONECT    6   24 
+CONECT    7   25 
+CONECT    7   26 
+CONECT    9   27 
+CONECT    9   28 
+CONECT   10   29 
+CONECT   10   30 
+CONECT   12   31 
+CONECT   12   32 
+CONECT   13   33 
+CONECT   13   34 
+CONECT   15   35 
+CONECT   15   36 
+CONECT   15   37 
+END

@@ -1,0 +1,8 @@
+; based on IOD/CN in Li-Merz work
+[ moleculetype ]
+; Name            nrexcl
+FE             1
+
+[ atoms ]
+; id    at type     res nr  residu name at name  cg nr  charge   mass
+1       FE2I    1       FE          FE2I      1      1.6        55.845

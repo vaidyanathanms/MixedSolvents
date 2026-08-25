@@ -1,0 +1,7 @@
+[ moleculetype ]
+; Name   nrexcl
+CL        1
+
+[ atoms ]
+; nr  type    resi  res  atom  cgnr    charge      mass
+   1  CLI      1   CL    CLI     1   -0.8000    35.453

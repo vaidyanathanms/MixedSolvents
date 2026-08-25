@@ -1,0 +1,7 @@
+[ moleculetype ]
+; Name   nrexcl
+NA        1
+
+[ atoms ]
+; nr  type    resi  res  atom  cgnr    charge      mass
+   1  NAI      1   NA    NAI     1   0.8000    22.989769

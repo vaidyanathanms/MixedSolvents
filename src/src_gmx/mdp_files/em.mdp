@@ -1,0 +1,30 @@
+
+; VARIOUS PREPROCESSING OPTIONS
+title                   = ionic liquid and carbon col
+cpp                     = /usr/bin/cpp
+
+integrator 		= steep
+
+emstep                  = 0.01
+emtol                   = 1000.0
+
+pbc                     = xyz
+nsteps			= 10000
+nstlist			= 1 
+ns_type			= grid
+
+;periodic_molecules 	= yes
+;constraints		= all-bonds ;
+vdw-type                = Cut-off      ; twin range cut-off’s with neighbor list
+rlist                   = 1.0
+;rlistlong	        = 1.3
+coulombtype             = PME
+rcoulomb                = 1.0
+rvdw                    = 1.0 
+epsilonr           	= 1.0
+fourierspacing          = 0.13
+;pme_order		= 6		; cubic interpolation
+;ewald_rtol      	= 9.0e-7
+optimize_fft		= yes
+;freezegrps              = col
+;freezedim               = Y Y Y 
