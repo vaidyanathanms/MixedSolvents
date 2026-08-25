@@ -38,13 +38,14 @@ sol1_conc_arr     = np.array([0.1, 1]) # in mol/l
 sol2_conc_arr     = np.array([0, 0.05]) # in mol/l
 
 #------------------------------------------------------------------
-# Required GMX/sh and default gro/top files
-mdp_fyles  = ['minim_pyinp.mdp','nvt_pyinp.mdp',\
-              'npt_crescale_pyinp.mdp','npt_main_pyinp.mdp']
-sh_md_fyle = 'run_md_pyinp.sh'
-sh_pp_fyle = 'run_preprocess_pyinp.sh'
-sh_rep_fyl = ['repeat_all.sh','repeat_md.sh']
-def_inicon = 'initconf.gro'
+# Required GMX/sh and default gro/top/itp files
+atomtyp_fyl = 'ffnonbonded.itp'
+mdp_fyles   = ['minim_pyinp.mdp','nvt_pyinp.mdp',\
+               'npt_crescale_pyinp.mdp','npt_main_pyinp.mdp']
+sh_md_fyle  = 'run_md_pyinp.sh'
+sh_pp_fyle  = 'run_preprocess_pyinp.sh'
+sh_rep_fyl  = ['repeat_all.sh','repeat_md.sh']
+def_inicon  = 'initconf.gro'
 
 #------------------------------------------------------------------
 # Simulation details
