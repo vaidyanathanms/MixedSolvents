@@ -39,7 +39,7 @@ sol2_conc_arr     = np.array([0, 0.05]) # in mol/l
 
 #------------------------------------------------------------------
 # Required GMX/sh and default gro/top/itp files
-atomtyp_fyl = 'ffnonbonded.itp'
+attye_fname = 'ffnonbonded.itp'
 mdp_fyles   = ['minim_pyinp.mdp','nvt_pyinp.mdp',\
                'npt_crescale_pyinp.mdp','npt_main_pyinp.mdp']
 sh_md_fyle  = 'run_md_pyinp.sh'
