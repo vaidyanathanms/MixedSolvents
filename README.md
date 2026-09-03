@@ -4,6 +4,7 @@ For understanding the structural and dynamic characteristics of mixed solvents w
 
 Points to be added
 
+0. Required software
 1. all_props.xlsx - how to edit
 2. how to edit direcs.py
 3. how to run genconf.py
