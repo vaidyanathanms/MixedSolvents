@@ -1,0 +1,45 @@
+#
+# A mixture of ionic liquid and diluents
+#
+# All the atoms from diferent molecules will be separated at least 2.0A
+
+tolerance 2.0
+
+# The file type of input and output files is PDB
+
+filetype pdb
+
+# The name of the output file
+# Naming: ratio of salt:IL:diluent
+
+output mixture_12_6.pdb
+
+# Add lithium
+structure ../src_gmx/allcoord_files/li.pdb
+  number 100
+  inside box 0. 0. 0. 60 60 60 
+end structure
+
+# Add ionic liquid
+structure ../src_gmx/allcoord_files/c2c1im.pdb 
+  number 200
+  inside box 0. 0. 0. 60 60 60
+end structure
+
+# Add counter-ions based on lithium
+structure ../src_gmx/allcoord_files/fsi.pdb
+  number 100
+  inside box 0. 0. 0. 60 60 60
+end structure
+
+# Add counter-ions based on ionic liquid
+structure ../src_gmx/allcoord_files/fsi.pdb
+  number 200
+  inside box 0. 0. 0. 60 60 60
+end structure
+
+# Add diluent
+structure ../src_gmx/allcoord_files/tte.pdb
+  number 60
+  inside box 0. 0. 0. 60 60 60
+end structure
