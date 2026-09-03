@@ -97,15 +97,15 @@ def glob_ci(root, wildcard_pattern):
 #------------------------------------------------------------------
 
 # Compute total number of electrolyte atoms
-def compute_solv_molecules(s1name,s2name,v1frac\
+def compute_solv_molecules(s1name,s2name,v1frac,\
                            excel_fname='all_props.xlsx',\
                            sheet_name='PropertyData'):
     chemicals = load_components(excel_fname,sheet_name)
     s1nmol = 100*v1frac
-    s1type = chemicals[s1name]; s2type = chemicals[s2name]
-    s1dens = s1name.density; s2dens = s2name.density
-    s1MW = s1name.MW; s2MW = s2name.MW
-    s2nmol = s2name.PureSolvNMols if v1frac == 0 \
+    s1var  = chemicals[s1name]; s2var = chemicals[s2name]
+    s1dens = s1var.density; s2dens = s2var.density
+    s1MW   = s1var.MW; s2MW = s2var.MW
+    s2nmol = s2var.PureSolvNMols if v1frac == 0 \
         else  round((s1nmol)*((100-v1frac)/(v1frac))*(s2dens/s1dens)*(s1MW/s2MW))
     volsol = s1nmol*(s1MW/s1dens) + s2nmol*(s2MW/s2dens)
     return s1nmol, s2nmol, volsol
@@ -113,30 +113,8 @@ def compute_solv_molecules(s1name,s2name,v1frac\
 #------------------------------------------------------------------
 
 # Compute total number of electrolyte atoms
-def compute_elec_molecules(solvol,conc,ename,\
-                           excel_fname='all_props.xlsx',\
-                           sheet_name='PropertyData'):
-    chemicals = load_components(excel_fname,sheet_name)
-    etype = chemicals[ename]
-    return solvol*conc*0.001 # For conversion to mol/cc
-
-#------------------------------------------------------------------
-
-# Compute total number of atoms and simulation box dimensions
-def compute_sim_dims(s1name,s1nmol,s2name,s2nmol,e1name,e1nmol,\
-                     e2name,e2nmol,init_dens = 0.8,\
-                     excel_fname='all_props.xlsx',\
-                     sheet_name='PropertyData'):
-):
-    chemicals = load_components(excel_fname,sheet_name)
-    s1type = chemicals[s1name]; s2type = chemicals[s2name]
-    e1type = chemicals[e1name]; e2type = chemicals[e2name]
-    totatoms = s1nmol*s1type.Natoms + s2nmol*s2type.Natoms + \
-        e1nmol*e1type.Natoms + e2nmol*e2type.Natoms
-    totmass = s1nmol*s1type.MW + s2nmol*s2type.MW + \
-        e1nmol*e1type.MW + e2nmol*e2type.MW
-    boxvol = totmass/0.6023 # conversion to Ang^3
-    return totatoms,totmass,boxvol,boxvol**(1.0/3.0)
+def compute_elec_molecules(solvol,conc):
+    return round(solvol*conc*0.001) #0.001 for solvol in cc to l
 
 #------------------------------------------------------------------
 
@@ -154,39 +132,71 @@ def split_ename(ename,enmol,cation_types,anion_types,valence_tuple):
     
     return catmol,catname,anmol,anname
 
+#------------------------------------------------------------------
+
+# Compute total number of atoms and simulation box dimensions
+def compute_sim_dims(s1name,s1nmol,s2name,s2nmol,cat1name,cat1mol,\
+                     an1name,an1mol,v1tup,cat2name,cat2mol,an2name,\
+                     an2mol,v2tup,e1nmol,e2nmol,init_dens = 0.8,\
+                     excel_fname='all_props.xlsx',\
+                     sheet_name='PropertyData'):
+
+    chemicals = load_components(excel_fname,sheet_name)
+
+    e1cat = cat1name if v1tup[0] == 1 else cat1name+str(v1tup[0])
+    e1an  = an1name  if v1tup[1] == 1 else an1name+str(v1tup[1])
+    e2cat = cat2name if v2tup[0] == 1 else cat2name+str(v2tup[0])
+    e2an  = an2name  if v2tup[1] == 1 else an2name+str(v2tup[1])
+    e1name = e1cat+e1an; e2name = e2cat+e2an
+
+    s1var = chemicals[s1name]; s2var = chemicals[s2name]
+    e1var = chemicals[e1name]; e2var = chemicals[e2name]
+    
+    totatoms = s1nmol*s1var.Natoms + s2nmol*s2var.Natoms + \
+        e1nmol*e1var.Natoms + e2nmol*e2var.Natoms
+    print(s1nmol,s2nmol,e1nmol,e2nmol)
+    
+    totmass = s1nmol*s1var.MW + s2nmol*s2var.MW + \
+        e1nmol*e1var.MW + e2nmol*e2var.MW
+    boxvol = totmass/(init_dens*0.6023) # conversion to Ang^3
+    return totatoms,totmass,boxvol,boxvol**(1.0/3.0)
+
+#------------------------------------------------------------------
+
 # Generate arrays for writing GMX files
-def generate_gmx_arrs(s1name,s1nmol,s2name,s2nmol,e1name,e1nmol,\
-                      e2name,e2nmol):
+def generate_gmx_arrs(s1name,s1nmol,s2name,s2nmol,e1nmol,cat1name,cat1mol,\
+                      an1name,an1mol,e2nmol,cat2name,cat2mol,an2name,an2mol):
+
 
     itp_arr = []; cfg_arr = []; resname_arr = []
     molname_arr = []; molval_arr = []
     
     if s1nmol != 0:
-        itp_arr.extend([s1name + '.itp'])
-        cfg_arr.extend([s1name + '.pdb'])
-        resname_arr.extend([s1resname])
+        itp_arr.extend([s1name])
+        cfg_arr.extend([s1name])
+        resname_arr.extend([s1name])
         molname_arr.extend([s1name])
         molval_arr.extend([s1nmol])
     if s2nmol != 0:
-        itp_arr.extend([s2name + '.itp'])
-        cfg_arr.extend([s2name + '.pdb'])
-        resname_arr.extend([s2resname])
+        itp_arr.extend([s2name])
+        cfg_arr.extend([s2name])
+        resname_arr.extend([s2name])
         molname_arr.extend([s2name])
         molval_arr.extend([s2nmol])
     if e1nmol != 0:
-        itp_arr.extend([catname + '.itp',anname+'.itp'])
-        cfg_arr.extend([catname + '.pdb',anname+'.pdb'])
-        resname_arr.extend([catresname,anresname])
-        molname_arr.extend([catname,anname])
-        molval_arr.extend([catmol,anmol])      
+        itp_arr.extend([cat1name,an1name])
+        cfg_arr.extend([cat1name,an1name])
+        resname_arr.extend([cat1name,an1name])
+        molname_arr.extend([cat1name,an1name])
+        molval_arr.extend([cat1mol,an1mol])      
     if e2nmol != 0:
-        itp_arr.extend([catname + '.itp',anname+'.itp'])
-        cfg_arr.extend([catname + '.pdb',anname+'.pdb'])
-        resname_arr.extend([catresname,anresname])
-        molname_arr.extend([catname,anname])
-        molval_arr.extend([catmol,anmol])      
+        itp_arr.extend([cat2name,an2name])
+        cfg_arr.extend([cat2name,an2name])
+        resname_arr.extend([cat2name,an2name])
+        molname_arr.extend([cat2name,an2name])
+        molval_arr.extend([cat2mol,an2mol])      
 
-        return itp_arr,cfg_arr,resname_arr,molname_arr,molval_arr
+    return itp_arr,cfg_arr,resname_arr,molname_arr,molval_arr
     
 #------------------------------------------------------------------
 
@@ -196,11 +206,12 @@ def cpy_coord_files(cfg_dir,inp_arr,workdir,destdirname="all_coords"):
     if not os.path.isdir(destdir):
         os.mkdir(destdir)
 
+
     coordfyle_list = [] 
     for fname in inp_arr:
-        allfyles     = glob_ci(cfg_dir,fname+".pdb")
+        allfyles     = glob_ci(cfg_dir,fname+'.pdb')
         if allfyles == []:
-            raise RuntimeError(f"No coordinate file for {fname}")
+            raise RuntimeError(f"No coordinate file for {fname} in {cfg_dir}")
         else:
             cname = max(allfyles,key=os.path.getmtime)
             shutil.copy2(cname,destdir)
@@ -441,13 +452,11 @@ def load_components(excel_file, sheet_name='PropertyData'):
         abbreviation = str(row["abbreviation"]).strip()
 
         components[abbreviation] = SimpleNamespace(
-            atoms=int(row["Natoms"]),
+            Natoms=int(row["Natoms"]),
             MW=float(row["MW"]),
             density=float(row["density"]),
             PureNMols=float(row["PureSolvNMols"]),
         )
-
-        setattr(components, abbreviation, component)
 
     return components
 #------------------------------------------------------------------

@@ -13,7 +13,8 @@ import glob
 import math
 import subprocess
 import extra_functions as ef
-import directories
+from direcs import *
+
 #------------------------------------------------------------------ 
 # Version Info
 print("Generating GROMACS run-time inputs")
@@ -37,8 +38,10 @@ sol1_conc_arr     = np.array([0.1, 1]) # in mol/l
 sol2_conc_arr     = np.array([0, 0.05]) # in mol/l
 
 #------------------------------------------------------------------
-# Required GMX/sh and default gro/top/itp files
-attye_fname = 'ffnonbonded.itp'
+# Required GMX/sh/Excel and default gro/top/itp files
+excel_fname = '../../all_props.xlsx'
+sheet_name  = 'PropertyData'
+atype_fname = 'ffnonbonded.itp'
 mdp_fyles   = ['minim_pyinp.mdp','nvt_pyinp.mdp',\
                'npt_crescale_pyinp.mdp','npt_main_pyinp.mdp']
 sh_md_fyle  = 'run_md_pyinp.sh'
@@ -53,7 +56,7 @@ init_density      = 0.8 # in g/cc
 #------------------------------------------------------------------
 # Check directories
 curr_dir = os.getcwd()
-if not os.path.isdir(main_dir):
+if not os.path.isdir(home_dir):
     raise RuntimeError('Check path to src files and update main_dir')
 if not os.path.isdir(scr_dir):
     raise RuntimeError('Check path to working dir and update scr_dir')
@@ -79,8 +82,7 @@ for s1id,s1name in enumerate(solvent_1_arr):
                                                              s2name,\
                                                              v1frac,\
                                                              excel_fname=excel_file,\
-                                                             sheet_name=sheet_name):
-)
+                                                             sheet_name=sheet_name)
 
             # Loop over concentrations of solvent-1
             for c1id,c1val in enumerate(sol1_conc_arr):
@@ -90,78 +92,76 @@ for s1id,s1name in enumerate(solvent_1_arr):
 
                     # Loop over electrolyte-1
                     for e1id,e1name in enumerate(electrolyte_1_arr):
+                        # Compute number of molecules of electrolyte-1
+                        e1nmol = ef.compute_elec_molecules(volsol,c1val)
+
                         # Split cations and anions in Elec-1
-                        catmol,catname,anmol,anname = \
+                        cat1mol,cat1name,an1mol,an1name = \
                             ef.split_ename(e1name,e1nmol,\
                                            cation_types,\
                                            anion_types,\
                                            valence_1_arr[e1id])
 
-                        # Compute number of molecules of electrolyte-1
-                        e1nmol = ef.compute_elec_molecules(volsol,\
-                                                           c1val,\
-                                                           e1name,\
-                                                           excel_fname=excel_file,\
-                                                           sheet_name=sheet_name):
-)
 
                         # Loop over electrolyte-2
                         for e2id,e2name in enumerate(electrolyte_2_arr):
+                            # Compute number of molecules of electrolyte-2
+                            e2nmol = ef.compute_elec_molecules(volsol,c2val)
+
                             # Split cations and anions in Elec-1
-                            catmol,catname,anmol,anname = \
+                            cat2mol,cat2name,an2mol,an2name = \
                                 ef.split_ename(e2name,e2nmol,\
                                                cation_types,\
                                                anion_types,\
                                                valence_2_arr[e2id])
 
-                            # Compute number of molecules of electrolyte-2
-                            e2nmol = ef.compute_elec_molecules(volsol,\
-                                                               c2val,\
-                                                               e2name,\
-                                                               excel_fname=excel_file,\
-                                                               sheet_name=sheet_name):
-)
-                            elec1dir = scr_dir + '/' + e1name + \
+
+                            elec1dir = scr_maindir + '/' + e1name + \
                                 '_conc_' + str(c1val)
                             if not os.path.isdir(elec1dir):
-                                os.mkdir(elecdir)
+                                os.mkdir(elec1dir)
 
                             elec2dir = elec1dir + '/' + e2name + \
                                 '_conc_' + str(c2val)
                             if not os.path.isdir(elec2dir):
-                                os.mkdir(elec22dir)
+                                os.mkdir(elec2dir)
 
-                            solvdir = elec2dir + '/' + s1name + '_' s2name
+                            solvdir = elec2dir + '/' + s1name + '_' + s2name
                             if not os.path.isdir(solvdir):
                                 os.mkdir(solvdir)
 
                             workdir = solvdir + '/volfrac_' + str(v1frac)
                             if not os.path.isdir(workdir):
-                                os.mkdir(solvdir)
+                                os.mkdir(workdir)
                             
-                            print(f'Setting up simulations for
-                            Solvent-1: {s1name}; Solvent-2: {s2name};
-                            Elec-1: {e1name}; Elec-2: {e2name}')  
+                            print((f'Setting up simulations for'
+                                   f'Solvent-1: {s1name}; Solvent-2: {s2name};'
+                                   f'Elec-1: {e1name}; Elec-2: {e2name}'))  
                                 
                             # Set-up box dimensions 
                             totnatoms,totmass,boxvol,boxlen = \
                                 ef.compute_sim_dims(s1name,s1nmol,\
                                                     s2name,s2nmol,\
-                                                    e1name,e1nmol,\
-                                                    e2name,e2nmol,\
-                                                    init_dens =\
-                                                    init_density,\
+                                                    cat1name,cat1mol,\
+                                                    an1name,an1mol,\
+                                                    valence_1_arr[e1id],\
+                                                    cat2name,cat2mol,\
+                                                    an2name,an2mol,\
+                                                    valence_2_arr[e2id],\
+                                                    e1nmol,e2nmol,
+                                                    init_dens=init_density,\
                                                     excel_fname=excel_file,\
-                                                    sheet_name=sheet_name):
-)
+                                                    sheet_name=sheet_name)
                             
-
                             # Set-up gmx inputs
                             itp_arr,cfg_arr,resname_arr,molname_arr,molval_arr = \
                                 ef.generate_gmx_arrs(s1name,s1nmol,s2name,s2nmol,\
-                                                     e1name,e1nmol,e2name,e2nmol)
+                                                     e1nmol,cat1name,cat1mol,an1name,\
+                                                     an1mol,e2nmol,cat2name,cat2mol,\
+                                                     an2name,an2mol)
 
-                            sysname = f"{e1name}_{c1val:.1f}_{e2name}_{c2val:.1f}_{s1name}_{volfrac.2f}_{s2name}"
+                            sysname = (f'{e1name}_{c1val:.1f}_{e2name}_'
+                                       f'{c2val:.1f}_{s1name}_{v1frac:2f}_{s2name}')
 
                             
                             # Copy and edit mdp files
@@ -192,8 +192,8 @@ for s1id,s1name in enumerate(solvent_1_arr):
                             itp_fnames = ef.reorder_itp_fnames(itp_fnames)
                             
                             # Copy atype files
-                            ef.gencpy(itp_dir,workdir+'/itp_files',attype_fname) 
-                            itp_fnames.insert(0,attype_fname)
+                            ef.gencpy(itp_dir,workdir+'/itp_files',atype_fname) 
+                            itp_fnames.insert(0,atype_fname)
 
                             # Generate top files
                             print('Generating top file ...')
@@ -207,15 +207,14 @@ for s1id,s1name in enumerate(solvent_1_arr):
                             # Generating packmol files
                             print('Generating packmol file ...')
                             ef.setup_packmol(coord_fnames,molval_arr,workdir,\
-                                             box_arr_ang[iarr],\
-                                             destdirname="all_coords",\
+                                             boxlen,destdirname="all_coords",\
                                              outname='mixture.pdb',\
-                                             packname = 'make_mixture.inp')
+                                             packname='make_mixture.inp')
                             
                             # Run files
                             print('Generating shell script files ...')
                             ef.cpy_sh_files(sh_dir,workdir,sh_pp_fyle,\
-                                            sh_md_fyle,box_arr_nm[iarr],\
+                                            sh_md_fyle,round(boxlen/10,2),\
                                             runall=run_all,\
                                             outname='mixture.pdb',\
                                             packname='make_mixture.inp',\
