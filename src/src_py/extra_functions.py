@@ -292,7 +292,7 @@ def setup_packmol(inpfnames,molval_arr,workdir,boxl,\
                   packname='make_mixture.inp'):
 
     with open(workdir + '/' + packname,'w') as fpack:
-        fpack.write('# \n # A mixture of ionic liquids & diluents or pure ionic liquids\n')
+        fpack.write('# \n # Fe-electrolyte(s) with solvent/solvent mixture\n')
         fpack.write('# Min separation: 2 Ang\n')
         fpack.write('# input filetype: pdb\n')
 

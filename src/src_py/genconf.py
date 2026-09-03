@@ -134,9 +134,11 @@ for s1id,s1name in enumerate(solvent_1_arr):
                             if not os.path.isdir(workdir):
                                 os.mkdir(workdir)
                             
-                            print((f'Setting up simulations for'
-                                   f'Solvent-1: {s1name}; Solvent-2: {s2name};'
-                                   f'Elec-1: {e1name}; Elec-2: {e2name}'))  
+                            print((f'\nSetting up simulations for \n'
+                                   f'Solvent-1: {s1name} @{v1frac}%\n '
+                                   f'Solvent-2: {s2name} @{100-v1frac}%\n '
+                                   f'Elec-1: {e1name} @{c1val} mol/l\n'
+                                   f'Elec-2: {e2name} @{c2val} mol/l'))  
                                 
                             # Set-up box dimensions 
                             totnatoms,totmass,boxvol,boxlen = \
