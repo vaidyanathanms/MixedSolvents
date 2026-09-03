@@ -2,3 +2,4 @@ backup_gro_pdb_itp_files/
 backup_py_files/
 src/src_py/*~
 InputStructures/
+src/src_py/__pycache__/
