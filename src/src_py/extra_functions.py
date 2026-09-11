@@ -105,7 +105,7 @@ def compute_solv_molecules(s1name,s2name,v1frac,\
     s1var  = chemicals[s1name]; s2var = chemicals[s2name]
     s1dens = s1var.density; s2dens = s2var.density
     s1MW   = s1var.MW; s2MW = s2var.MW
-    s2nmol = s2var.PureSolvNMols if v1frac == 0 \
+    s2nmol = s2var.PureNMols if v1frac == 0 \
         else  round((s1nmol)*((100-v1frac)/(v1frac))*(s2dens/s1dens)*(s1MW/s2MW))
     volsol = s1nmol*(s1MW/s1dens) + s2nmol*(s2MW/s2dens)
     return s1nmol, s2nmol, volsol
@@ -174,13 +174,19 @@ def generate_gmx_arrs(s1name,s1nmol,s2name,s2nmol,e1nmol,cat1name,cat1mol,\
     if s1nmol != 0:
         itp_arr.extend([s1name])
         cfg_arr.extend([s1name])
-        resname_arr.extend([s1name])
+        if s1name == 'WAT':
+            resname_arr.extend(['SOL'])
+        else:
+            resname_arr.extend([s1name])
         molname_arr.extend([s1name])
         molval_arr.extend([s1nmol])
     if s2nmol != 0:
         itp_arr.extend([s2name])
         cfg_arr.extend([s2name])
-        resname_arr.extend([s2name])
+        if s2name == 'WAT':
+            resname_arr.extend(['SOL'])
+        else:
+            resname_arr.extend([s2name])
         molname_arr.extend([s2name])
         molval_arr.extend([s2nmol])
     if e1nmol != 0:
